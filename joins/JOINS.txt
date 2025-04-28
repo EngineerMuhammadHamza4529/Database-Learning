@@ -1,0 +1,247 @@
+Create DataBase Employee;
+Use Employee;
+
+Create Table Employee_Table
+(
+EmployeeID int unique not null,
+EmployeeName varchar(20) not null,
+Email varchar(50) not null,
+Desgination varchar(20) not null
+);
+
+Select * from Employee_Table;
+
+Insert into Employee_Table(EmployeeID , EmployeeName , Email , Desgination)
+Values
+(11 , 'Amir' , 'Amir123@gmail.com' , 'Manager'),
+(12 , 'Usman' , 'Usman123@gmail.com' , 'Assistant Manager'),
+(13 , 'Anus' , 'Anus123@gmail.com' , 'IT-Incharge'),
+(14 , 'Umer' , 'Umer123@gmail.com' , 'Computer Operator'),
+(15 , 'Taha' , 'Taha123@gmail.com' , 'Developer');
+
+truncate table Employee_Table; --Delete Record but not delete tables --
+
+Create Table Department_Table
+(
+DptID int unique not null,
+DptName varchar(20)  not null,
+DptSalary varchar(20) not null,
+EmpID int unique not null
+);
+
+Select * from Department_Table;
+
+Insert into Department_Table(DptID , DptName , DptSalary , EmpID)
+Values
+(111 , 'Administration' , '50000' , 13),
+(222 , 'Accounts' , '60000' , 12),
+(333 , 'IT_Dpt' , '40000' , 11),
+(444 , 'Academic' , '45000' , 14),
+(555 , 'Sports' , '55000' , 17);
+
+truncate table Department_Table;
+Select * from Department_Table;
+
+--Inner Join with Alias--
+
+Select * from Employee_Table as A
+inner join Department_Table as B
+on A.EmployeeID = B.EmpID;
+
+--Inner Join without Alias--
+
+Select * from Employee_Table as Employee_Table
+inner join Department_Table as Department_Table
+on Employee_Table.EmployeeID = Department_Table.EmpID;
+
+
+--Ineer join with Alias (Name, Desgination, Dptname, DptSalary)--
+
+Select A.EmployeeName , A.Desgination , B.DptName, B.DptSalary from Employee_Table as A
+inner join Department_Table as B
+on A.EmployeeID = B.EmpID;
+
+--Ineer join without Alias (Name, Desgination, Dptname, DptSalary)--
+
+Select Employee_Table.EmployeeName , Employee_Table.Email, Employee_Table.Desgination, Department_Table.DptName , Department_Table.DptSalary from Employee_Table as Employee_Table
+inner join Department_Table as Department_Table
+on Employee_Table.EmployeeID = Department_Table.EmpID;
+
+
+
+
+Select * from Employee_Table as Employee_Table
+inner join Department_Table as Department_Table
+on Employee_Table.EmployeeID = Department_Table.EmpID;
+
+Select * from Employee_Table as Employee_Table
+left join Department_Table as Department_Table
+on Employee_Table.EmployeeID = Department_Table.EmpID;
+
+Select * from Employee_Table as Employee_Table
+right join Department_Table as Department_Table
+on Employee_Table.EmployeeID = Department_Table.EmpID;
+ 
+Select * from Employee_Table as Employee_Table
+full outer join Department_Table as Department_Table
+on Employee_Table.EmployeeID = Department_Table.EmpID;
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Having , group by and order by :
+
+
+
+
+Create Table Employee_Information
+(
+EmpId int primary key Identity(100,1) not null,
+EmpName varchar(20) not null,
+Gender varchar(20) not null,
+Salary int not null,
+City varchar(20) not null,
+DeptId varchar(20) not null,
+);
+
+
+Insert into Employee_Information(EmpName , Gender, Salary , City , DeptId)
+Values
+('Usman' , 'Male' , 25000 , 'Hyderabad' , 2),
+('Anus' , 'Male' , 45000 , 'Karachi' , 1),
+('Aram' , 'Female' , 35000 , 'Sukkur' , 3),
+('Ali' , 'Male' , 45000 , 'Hyderabad' , 4),
+('Ausgar' , 'Male' , 35000 , 'Karachi' , 2),
+('Usama' , 'Male' , 25000 , 'Sukkur' , 1),
+('Amara' , 'Female' , 15000 , 'Hyderabad' , 3),
+('Zain' , 'Male' , 35000 , 'Karachi' , 2),
+('Nimra' , 'Female' , 35000 , 'Sukkur' , 1),
+('Ameer' , 'Male' , 45000 , 'Hyderabad' , 4),
+('Sumbul' , 'Female' , 25000 , 'Karachi', 3);
+
+Select * from Employee_Information;
+
+
+
+--By using having clause and group by and order by --
+Select Gender , City , sum(Salary) as [Total salaries according to cities] from Employee_Information
+group by City , Gender;
+
+
+Select Gender , City , Count(EmpName) as [Total salaries according to cities] from Employee_Information
+group by City , Gender;
+
+
+Select City , sum(Salary) as [Total Salary] from Employee_Information
+group by City
+having City = 'Karachi';
+
+Select City , sum(Salary) as [Total Salary] from Employee_Information
+where City = 'Sukkur'
+group by City;
+
+Select City , sum(Salary) as [Total Salary] from Employee_Information
+where City = 'Hyderabad'
+group by City;
+
+Select City , sum(Salary) as [Total Salary] from Employee_Information
+group by City
+Having sum(Salary) >= 50000;
+
+
+Select City , sum(Salary) as [Total salay] from Employee_Information
+where City in ('Hyderabad' , 'Karachi' , 'Sukkur')
+group by City
+having sum(Salary) >= 140000;
+
+Select City , sum(Salary) as [total salary] from Employee_Information
+Where City not in ('Hyderabad' , 'Sukkur')
+group by City;
+
+Select City , Sum(Salary) as [total salary] from Employee_Information
+Where City not in ('Hyderabad','Karachi')
+group by City
+having sum(Salary) >= 95000;
+
+Select City , sum(Salary) as [Total Salary] from Employee_Information
+group by City
+having City not in ('Sukkur');
+
+Select City , sum(Salary) as [Total Salary] from Employee_Information
+group by City
+having City in ('Sukkur');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Select * from Employee_Information;
+
+Select * from Department_Table;
+
+Select * from Employee_Information
+where EmpId = 105; 
+
+Select * from Employee_Information
+Where EmpId in 
+(Select EmpId from Employee_Information Where Salary > 30000 );
+
+Select * from Employee_Information
+Where EmpId in
+(Select EmpId from Employee_Information Where Gender = 'Male');
+
+Select * from Employee_Information
+Where EmpId in
+(Select EmpId from Employee_Information Where City = 'Karachi');
+
+Select EmpName , Gender , Salary from Employee_Information
+where EmpId in 
+(Select EmpId from Employee_Information where Gender = 'Female');
+
+UPDATE Employee_Information
+SET Salary = Salary + 2000
+WHERE EmpId in 
+(Select EmpId Employee_Information where City = 'Karachi');
+
+
+
+
+
+
+
+
+
+
